@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina|Nunito" rel="stylesheet">
+
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+	<script type='text/javascript'>
+		var name = 'Anonymous';
+
+		console.log(io);
+		var socketio = io.connect('http://127.0.0.1:8080');
+
+		socketio.on('message_to_client', function(data){
+			document.getElementById('chats').innerHTML += '<div class="im">' + data.name + '--' + data.message + '--' + data.date + '</div>';
+		})
+
+		socketio.on('users', function(name){
+			document.getElementById('chatters').innerHTML += '<ul><li class="user">' + name.name + '</li></ul>';
+			// alert(name.name + " has joined the chat!");
+			document.getElementById('sendName').disabled = true; 
+		})
+
+		// socketio.on('user_left', function(name){
+		// 	document.getElementById('chatters').innerHTML -= '<ul><li class="user">' + name.name + '</li></ul>';
+		// })
+
+		function sendMessage(){
+			var date = new Date().toTimeString();
+			var message = document.getElementById('message').value;
+			socketio.emit(
+				'message_to_server', 
+				{
+					message: message,
+					name: name,
+					date: date,
+				}
+			);
+		}
+
+		function sendName(){
+			name = document.getElementById('nameInput').value;
+			socketio.emit(
+				'name_to_server',
+				{
+					name: name
+				}
+			);
+		}
+
+	</script>
+
+	<style type="text/css" media="screen">
+		body{
+			background-color: #00e6b8;
+		}
+
+		h1, h2, h3{
+			font-family: 'Baloo Bhaina', cursive;
+			text-align: center;
+		}
+
+		#name, #comment{
+			display: inline-block;
+		}
+
+		#comment{
+			margin-left: 50px;
+		}
+
+		#name{
+			margin-left: 20px;
+		}
+
+		button, #nameInput, #message, .im {
+			font-family: 'Nunito', sans-serif;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			margin-right: 5px;
+			margin-left: 5px;
+			border-radius: 5px;
+		}
+
+		#nameInput, #message{
+			font-size: 20px;
+		}
+
+		button{
+			font-size: 20px;
+			background-color: #bf4080;
+		}
+
+		#chatters{
+			border: 2px solid black;
+			width: 25%;
+			display: inline-block;
+			background-color: #6699ff;
+			height: 50vh;
+			border-radius: 5px;
+			margin-left: 20px;
+			overflow: scroll;
+			font-family: 'Nunito', sans-serif;
+		}
+
+		#chat-window{
+			border: 2px solid black;
+			width: 70%;
+			float: right;
+			height: 50vh;
+			background-color: white;
+			border-radius: 5px;
+			margin-right: 20px;
+			overflow: scroll;
+			font-family: 'Nunito', sans-serif;
+		}
+		
+	</style>
+</head>
+<body>
+
+	<div id='header-wrapper'>
+		<h1>Beginner's Chat Room</h1>
+		<h2>Got something to say? We want to hear it!</h2>
+	</div>	
+
+	<div id="info-wrapper">
+		<div id="name">
+			<input type='text' id='nameInput' placeholder="Your name here">
+			<button id='sendName' onclick='sendName()'>Submit Name</button> 
+		</div>
+
+		<div id="comment">
+			<input type='text' id='message' placeholder="Your message here!">
+			<button onclick="sendMessage()">Click here to send message!</button>
+		</div>
+	</div>
+
+	<div id="chat-stuff">
+		<div id='chatters'>
+			<h3>Users</h3>
+		</div>
+
+		<div id='chat-window'>
+			<div id="chats">
+				<h3>Chats</h3>
+			</div>
+		</div>
+	</div>	
+
+
+</body>
+</html>
