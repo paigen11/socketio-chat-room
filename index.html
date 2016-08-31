@@ -20,7 +20,7 @@
 		socketio.on('users', function(name){
 			document.getElementById('chatters').innerHTML += '<ul><li class="user">' + name.name + '</li></ul>';
 			// alert(name.name + " has joined the chat!");
-			document.getElementById('sendName').disabled = true; 
+			// document.getElementById('sendName').disabled = true; 
 		})
 
 		// socketio.on('user_left', function(name){
@@ -28,7 +28,7 @@
 		// })
 
 		function sendMessage(){
-			var date = new Date().toTimeString();
+			var date = new Date().toLocaleString();
 			var message = document.getElementById('message').value;
 			socketio.emit(
 				'message_to_server', 
