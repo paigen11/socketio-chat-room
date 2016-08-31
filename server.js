@@ -48,8 +48,7 @@ io.sockets.on('connect', function(socket){
 
 	//this object is 'data' on index.html's 'users' socket
 	io.sockets.emit('users', socketUsers); 
-	
-	// socketUsers.push(socket);
+
 	console.log("someone connected via a socket");
 	
 	//someone just changed their name
@@ -71,6 +70,13 @@ io.sockets.on('connect', function(socket){
 			date: data.date
 		});
 	});
+
+	socket.on('drawing_to_server', function(drawingData){
+		if(drawingData.lastMousePosition !== null){
+			io.sockets.emit('drawing_to_client', drawingData)	
+			}
+		});
+
 	socket.on('disconnect', function(){
 		console.log("A user has disconnected");
 		for(var i = 0; i < socketUsers.length; i++){
