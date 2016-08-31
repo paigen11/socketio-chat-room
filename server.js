@@ -48,9 +48,6 @@ io.sockets.on('connect', function(socket){
 
 	//this object is 'data' on index.html's 'users' socket
 	io.sockets.emit('users', socketUsers); 
-	// {
-	// 	socketUsers: socketUsers	
-	// });
 	
 	// socketUsers.push(socket);
 	console.log("someone connected via a socket");
@@ -83,7 +80,7 @@ io.sockets.on('connect', function(socket){
 		}
 		// var user = socketUsers.indexOf(socket);
 		// socketUsers.splice(user,1);
-		
+		io.sockets.emit('users', socketUsers);
 	});
 });
 
