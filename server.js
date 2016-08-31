@@ -39,7 +39,7 @@ var io = socketIo.listen(server);
 var socketUsers = [];
 // we need to deal with a new socket connection
 io.sockets.on('connect', function(socket){
-	
+	console.log(socket.id);
 	// console.log(socket);
 	socketUsers.push({
 		socketID: socket.id,
@@ -54,6 +54,7 @@ io.sockets.on('connect', function(socket){
 	
 	//someone just changed their name
 	socket.on('name_to_server', function(name){
+		console.log(socket.id);
 		for(var i = 0; i < socketUsers.length; i++){
 			if(socketUsers[i].socketID == socket.id){
 				socketUsers[i].name = name;
@@ -78,8 +79,6 @@ io.sockets.on('connect', function(socket){
 				break;
 			}
 		}
-		// var user = socketUsers.indexOf(socket);
-		// socketUsers.splice(user,1);
 		io.sockets.emit('users', socketUsers);
 	});
 });
