@@ -14,7 +14,9 @@
 		socketio.emit('name_to_server', name);
 
 		socketio.on('message_to_client', function(data){
+			if(data.name !== 'anonymous'){
 			document.getElementById('chats').innerHTML += '<div class="im">' + data.name + '--' + data.message + '--' + data.date + '</div>';
+			}
 		});
 
 		socketio.on('users', function(socketUsers){
