@@ -5,6 +5,9 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina|Nunito" rel="stylesheet">
 
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
 	<script type='text/javascript'>
@@ -60,102 +63,204 @@
 		#name, #comment{
 			display: inline-block;
 		}
-
-		#comment{
+		
+		#line-thick{
 			margin-left: 50px;
 		}
 
-		#name{
-			margin-left: 20px;
+		#thickness-picker{
+			width: 40px;
 		}
 
-		button, #nameInput, #message, .im {
+		#name, #nameInput{
+			padding-left: 0px;
+		}
+
+		#comment{
+			padding-left: 80px;
+		}
+
+		button, #nameInput, #message, .im, #tool-bar {
 			font-family: 'Nunito', sans-serif;
-			margin-top: 10px;
-			margin-bottom: 10px;
-			margin-right: 5px;
-			margin-left: 5px;
 			border-radius: 5px;
+		}
+
+		#tool-bar{
+			font-size: 15px;
 		}
 
 		#nameInput, #message{
-			font-size: 20px;
+			font-size: 15px;
+			width: 160px;
 		}
 
 		button{
-			font-size: 20px;
+			font-size: 15px;
 			background-color: #bf4080;
 		}
 
-		#chatters{
+		#chatters, #chat-window{
+			margin: 10px;
+		}
+
+		#chat-window, #chatters{
 			border: 2px solid black;
-			width: 25%;
-			display: inline-block;
-			background-color: #6699ff;
-			height: 50vh;
+			height: 100vh;
+			background-color: white;
 			border-radius: 5px;
-			margin-left: 20px;
-			overflow: scroll;
 			font-family: 'Nunito', sans-serif;
 		}
 
-		#chat-window{
+		#chatters{
+			background-color: #6699ff;
+		}
+
+		#canvas{
+			float: left;
 			border: 2px solid black;
-			width: 70%;
-			float: right;
-			height: 50vh;
-			background-color: white;
+			margin-top: 11px;
 			border-radius: 5px;
-			margin-right: 20px;
-			overflow: scroll;
-			font-family: 'Nunito', sans-serif;
+			background-color: white;
 		}
 		
 	</style>
 </head>
 <body ng-controller="myController">
 
-	<div id='header-wrapper'>
-		<h1>Beginner's Chat Room</h1>
-		<h2>Got something to say? We want to hear it!</h2>
-	</div>	
-
-	<div id="info-wrapper">
-		<div id="name">
-			<input type='text' id='nameInput' placeholder="Your name here">
-			<button id='sendName' onclick='sendName()'>Submit Name</button> 
-		</div>
-
-		<div id="comment">
-			<input type='text' id='message' placeholder="Your message here!">
-			<button onclick="sendMessage()">Click here to send message!</button>
-		</div>
-	</div>
-
-	<div id="chat-stuff">
-		<div id='chatters'>
-			<h3>Users</h3>
-				<ul>
-					<li ng-repeat="name in userNames">
-						{{stuff}}
-					</li>
-				</ul>
-		</div>
-
-		<div id='chat-window'>
-			<div id="chats">
-				<h3>Chats</h3>
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-xs-12' id='header-wrapper'>
+				<h1>Let's Draw Together</h1>
+				<h2>Got something to draw? Let your artistic talent flow!</h2>
 			</div>
+		</div>	
+
+		<div class='row'>
+			<div class='col-xs-12' id="info-wrapper">
+				<div class='col-md-2' id="name">
+					<input type='text' id='nameInput' placeholder="Your name here">
+					<button id='sendName' onclick='sendName()'>Submit Name</button> 
+				</div>
+
+				<div class='col-md-4' id="tool-bar">
+					<label>Choose your color</label>
+					<input type="color" id="color-picker">
+					<label id='line-thick'>Choose your thickness</label>
+					<input type='number' id='thickness-picker' placeholder=10>
+				</div>
+
+				<div class='col-md-4' id="comment">
+					<input type='text' id='message' placeholder="Your message here!">
+					<button onclick="sendMessage()">Click here to send message!</button>
+				</div>
+			</div>
+
+			
+			
+		</div>
+
+		<div class='row' id="chat-stuff">
+			<div class='col-md-2' id='chatters'>
+				<h3>Users</h3>
+					<ul>
+					</ul>
+			</div>
+			
+				<canvas id='canvas' width='650px' height='777px'>
+				</canvas>
+			
+
+			<div class='col-md-4' id='chat-window'>
+				<div id="chats">
+				</div>
+			</div>
+
 		</div>
 	</div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
 <script type='text/javascript'>
 	var myApp = angular.module('myApp', []);
 	myApp.controller('myController', function($scope){
 		$scope.message = 'Test';
-	})
-</script>		
+	});
+
+	// canvas section start
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+		var mouseDown = false;
+		var color = null;
+		var thickness = 10;
+		var colorChoice = document.getElementById('color-picker');
+		var mousePosition;
+		var lastMousePosition = null;
+
+		colorChoice.addEventListener('change', function(event){
+			color = colorChoice.value;
+			console.log(color);
+		});
+
+		var thicknessPicker = document.getElementById('thickness-picker');
+		thicknessPicker.addEventListener('change', function(event){
+			thickness = thicknessPicker.value;
+			console.log(thickness);
+		});
+
+		canvas.addEventListener('mousedown', function(event){
+			mouseDown = true;
+		});
+
+		canvas.addEventListener('mouseup', function(event){
+			mouseDown = false;
+			lastMousePosition = null;
+		})
+
+		canvas.addEventListener('mousemove', function(event){
+			if(mouseDown){
+				var magicBrushX = event.pageX - canvas.offsetLeft;
+				var magicBrushY = event.pageY - canvas.offsetTop;
+				// console.log(magicBrushX);
+				// console.log(magicBrushY);
+
+				mousePosition = {
+					x: magicBrushX,
+					y: magicBrushY
+				}
+
+				console.log(mousePosition);
+
+				if(lastMousePosition !== null){	
+					context.strokeStyle = color;
+					context.lineJoin = 'round';
+					context.lineWidth = thickness;
+					context.beginPath();
+					context.moveTo(lastMousePosition.x, lastMousePosition.y);
+					context.lineTo(mousePosition.x, mousePosition.y);
+					context.closePath();
+					context.stroke();
+				}
+
+				var drawingData = {
+					mousePosition: mousePosition,
+					lastMousePosition: lastMousePosition,
+					color: color,
+					thickness: thickness
+				}	
+
+				lastMousePosition = {
+					x: mousePosition.x,
+					y: mousePosition.y
+				};
+			}	
+
+		})
+if(window.outerWidth < 768){
+	// canvas.width = 
+}		
+
+		
+</script>			
 
 
 </body>
