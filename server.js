@@ -53,7 +53,7 @@ io.sockets.on('connect', function(socket){
 	
 	//someone just changed their name
 	socket.on('name_to_server', function(name){
-		console.log(socket.id);
+		
 		for(var i = 0; i < socketUsers.length; i++){
 			if(socketUsers[i].socketID == socket.id){
 				socketUsers[i].name = name;
@@ -76,6 +76,10 @@ io.sockets.on('connect', function(socket){
 			io.sockets.emit('drawing_to_client', drawingData)	
 			}
 		});
+
+	socket.on('erase_to_server', function(eraseData){
+		io.sockets.emit('erase_to_client', eraseData);
+	})
 
 	socket.on('disconnect', function(){
 		console.log("A user has disconnected");

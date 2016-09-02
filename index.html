@@ -48,6 +48,7 @@
 			socketio.emit('name_to_server',name);
 		}
 
+
 	</script>
 
 	<style type="text/css" media="screen">
@@ -65,7 +66,7 @@
 		}
 		
 		#line-thick{
-			margin-left: 50px;
+			margin-left: 30px;
 		}
 
 		#thickness-picker{
@@ -105,7 +106,7 @@
 
 		#chat-window, #chatters{
 			border: 2px solid black;
-			height: 100vh;
+			height: 777px;
 			background-color: white;
 			border-radius: 5px;
 			font-family: 'Nunito', sans-serif;
@@ -118,7 +119,7 @@
 		#canvas{
 			float: left;
 			border: 2px solid black;
-			margin-top: 11px;
+			margin-top: 10px;
 			border-radius: 5px;
 			background-color: white;
 		}
@@ -147,6 +148,7 @@
 					<input type="color" id="color-picker">
 					<label id='line-thick'>Choose your thickness</label>
 					<input type='number' id='thickness-picker' placeholder=10>
+					<button onclick='erase()'>Reset Canvas</button>
 				</div>
 
 				<div class='col-md-4' id="comment">
@@ -154,9 +156,6 @@
 					<button onclick="sendMessage()">Click here to send message!</button>
 				</div>
 			</div>
-
-			
-			
 		</div>
 
 		<div class='row' id="chat-stuff">
@@ -166,10 +165,8 @@
 					</ul>
 			</div>
 			
-				<canvas id='canvas' width='650px' height='777px'>
-				</canvas>
+			<canvas id='canvas' width='650px' height='777px'></canvas>
 			
-
 			<div class='col-md-4' id='chat-window'>
 				<div id="chats">
 				</div>
@@ -195,6 +192,7 @@
 		var colorChoice = document.getElementById('color-picker');
 		var mousePosition;
 		var lastMousePosition = null;
+		var eraseData = false;
 
 		colorChoice.addEventListener('change', function(event){
 			color = colorChoice.value;
@@ -242,6 +240,7 @@
 				}
 
 				var drawingData = {
+
 					mousePosition: mousePosition,
 					lastMousePosition: lastMousePosition,
 					color: color,
@@ -268,6 +267,24 @@ socketio.on('drawing_to_client', function(drawingData){
 	context.closePath();
 	context.stroke();
 })	
+
+function erase(){
+	eraseData = true;
+	context.clearRect(0,0,canvas.width, canvas.height);
+	socketio.emit('erase_to_server', eraseData);
+}
+
+socketio.on('erase_to_client', function(eraseData){
+	if(eraseData){
+		context.clearRect(0,0,canvas.width, canvas.height);
+		eraseData = false;
+	}
+});
+
+// function reset(){
+// 	var reset = context.clearRect(0,0,canvas.width, canvas.height);
+// 	socketio.emit('reset_boards', reset);
+// }
 
 		
 </script>			
