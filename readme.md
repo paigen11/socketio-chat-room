@@ -7,7 +7,6 @@ A multiplayer site where users can chat back and forth and draw together using H
   * HTML
   * CSS
   * JavaScript
-  * AngularJS
   * Node.js
   * Socket.io
 
@@ -22,16 +21,16 @@ Paige Niedringhaus
 ##Screenshots
 ---
 Starting screen when users join room
-[!alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/start-screen.png 'start-screen.png')
+![alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/start-screen.png 'start-screen.png')
 
 Example of multiple users chatting back and forth to each other
-[!alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/chat.png 'chat.png')
+![alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/chat.png 'chat.png')
 
 Display of the users in the chat room at the moment (updated dynamically as people enter and leave)
-[!alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/people-in-chat.png 'people-in-chat.png')
+![alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/people-in-chat.png 'people-in-chat.png')
 
 Draw together feature where users can draw pictures on HTML canvas 
-[!alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/group-drawing.png 'group-drawing.png')
+![alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/group-drawing.png 'group-drawing.png')
 
 ##Further Info
 ---
