@@ -46,7 +46,7 @@ io.sockets.on('connect', function(socket){
 		name: 'Anonymous'
 	});
 
-	//this object is 'data' on index.html's 'users' socket
+	//this object is 'socketUsers on index.html's 'users' socket
 	io.sockets.emit('users', socketUsers); 
 
 	console.log("someone connected via a socket");
