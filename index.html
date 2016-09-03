@@ -106,7 +106,7 @@
 
 		#chat-window, #chatters{
 			border: 2px solid black;
-			height: 777px;
+			height: 500px;
 			background-color: white;
 			border-radius: 5px;
 			font-family: 'Nunito', sans-serif;
@@ -144,9 +144,9 @@
 				</div>
 
 				<div class='col-md-4' id="tool-bar">
-					<label>Choose your color</label>
+					<label>Line color</label>
 					<input type="color" id="color-picker">
-					<label id='line-thick'>Choose your thickness</label>
+					<label id='line-thick'>Line thickness</label>
 					<input type='number' id='thickness-picker' placeholder=10>
 					<button onclick='erase()'>Reset Canvas</button>
 				</div>
@@ -165,7 +165,7 @@
 					</ul>
 			</div>
 			
-			<canvas id='canvas' width='650px' height='777px'></canvas>
+			<canvas id='canvas' width='465px' height='500px'></canvas>
 			
 			<div class='col-md-4' id='chat-window'>
 				<div id="chats">
@@ -280,12 +280,6 @@ socketio.on('erase_to_client', function(eraseData){
 		eraseData = false;
 	}
 });
-
-// function reset(){
-// 	var reset = context.clearRect(0,0,canvas.width, canvas.height);
-// 	socketio.emit('reset_boards', reset);
-// }
-
 		
 </script>			
 
