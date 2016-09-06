@@ -23,6 +23,6 @@
   "license": "MIT",
   "repository": {
   "type": "git",
-  "url": "git://github.com/paigen11/repository.git"
+  "url": "git://github.com/paigen11/socketio-chat-room.git"
 }
 }
