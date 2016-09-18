@@ -2,6 +2,10 @@
 ---
 A multiplayer site where users can chat back and forth and draw together using HTML's canvas, Node.js and Socket.io. Users can see who's in the chat room, choose drawing color and line thickness as well as clear all player's canvases at once.
 
+##Live demo
+---
+[Live demo](http://paigeniedringhaus.com/drawTogether/)
+
 ##Languages Used
 ---
   * HTML
