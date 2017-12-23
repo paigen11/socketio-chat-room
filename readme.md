@@ -32,7 +32,7 @@ Display of the users in the chat room at the moment (updated dynamically as peop
 Draw together feature where users can draw pictures on HTML canvas 
 ![alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/group-drawing.png 'group-drawing.png')
 
-##Further Info
+Further Info
 ---
 This app was styled with the assistance of Bootstrap's CSS. However, in order for the canvas (and drawing lines on the canvas to display correctly), the canvas height must be manually set in the HTML and Bootstrap columns must not be used on it.
 
