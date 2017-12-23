@@ -1,12 +1,8 @@
-#What is it?
+What is it?
 ---
 A multiplayer site where users can chat back and forth and draw together using HTML's canvas, Node.js and Socket.io. Users can see who's in the chat room, choose drawing color and line thickness as well as clear all player's canvases at once.
 
-##Live demo
----
-[Live demo](http://paigeniedringhaus.com/drawTogether/)
-
-##Languages Used
+Languages Used
 ---
   * HTML
   * CSS
@@ -14,15 +10,15 @@ A multiplayer site where users can chat back and forth and draw together using H
   * Node.js
   * Socket.io
 
-##Link to Github
+Link to Github
 ---
 [Github](https://github.com/paigen11/socketio-chat-room)
 
-##Authors
+Authors
 ---
 Paige Niedringhaus
 
-##Screenshots
+Screenshots
 ---
 Starting screen when users join room
 ![alt text](https://github.com/paigen11/socketio-chat-room/blob/master/screenshots/start-screen.png 'start-screen.png')
@@ -44,13 +40,13 @@ To dynamically update who's in the chat room (and what name they're using) witho
 
 The same socket.io 'emit' and 'on' functionality was used to update the chat box as people typed messages and drew on the canvas. 
 
-##Requirements
+Requirements
 ---
 To set this up, [Node.js](https://docs.npmjs.com/getting-started/installing-node) and [socket.io](https://www.npmjs.com/package/socket.io) need to be downloaded with --save behind their install commands to save them to the package.json dependencies. 
 
 I also installed [nodemon](https://www.npmjs.com/package/nodemon) so I wouldn't have to keep starting and stopping the node server.js command each time I updated the code base. If you use this, use --save to make it a dependency as well.
 
-##Code Examples
+Code Examples
 ---
 JavaScript for socket.io server connection and delivering messages to all users
 
